@@ -6,11 +6,11 @@ echo -e "\e[33m Installing NodeJS \e[0m"
 dnf install nodejs -y &>>/tmp/roboshop.log
 
 echo -e "\e[33m Add Application User \e[0m"
-useradd roboshop
+useradd roboshop &>>/tmp/roboshop.log
 
 echo -e "\e[33m Create Application Directory \e[0m"
-rm-rf /app
-mkdir /app
+rm-rf /app &>>/tmp/roboshop.log
+mkdir /app &>>/tmp/roboshop.log
 
 echo -e "\e[33m Downloading Application Content \e[0m"
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip &>>/tmp/roboshop.log
@@ -24,18 +24,18 @@ cd /app
 npm install &>>/tmp/roboshop.log
 
 echo -e "\e[33m Setup SystemD Service \e[0m"
-cp catalogue.service /etc/systemd/system/catalogue.service
+cp catalogue.service /etc/systemd/system/catalogue.service &>>/tmp/roboshop.log
 
 echo -e "\e[33m Start Catalogue Service \e[0m"
-systemctl daemon-reload
-systemctl enable catalogue
-systemctl restart catalogue
+systemctl daemon-reload &>>/tmp/roboshop.log
+systemctl enable catalogue &>>/tmp/roboshop.log
+systemctl restart catalogue &>>/tmp/roboshop.log
 
 echo -e "\e[33m Copy MongoDB Repo file \e[0m"
-cp mongodb.repo /ete/yum.repos.d/mongo.repo
+cp mongodb.repo /ete/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
 
 echo -e "\e[33m Install MongoDB Client \e[0m"
 dnf install mongodb-org-shell -y &>>/tmp/roboshop.log
 
 echo -e "\e[33m Load Schema \e[0m"
-mongo --host mongodb-dev.vagdevi.store </app/schema/catalogue.js
+mongo --host mongodb-dev.vagdevi.store </app/schema/catalogue.js &>>/tmp/roboshop.log
