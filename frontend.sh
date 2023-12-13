@@ -13,7 +13,7 @@ cd /usr/share/nginx/html
 unzip /tmp/frontend.zip &>>/tmp/roboshop.log
 
 echo -e "\e[33m UPDATE FRONTEND CONFIGURATION \e[0m"
-cp roboshop.conf /etc/nginx/default.d/roboshop.conf
+cp /home/centos/roboshop-shell/roboshop.conf /etc/nginx/default.d/roboshop.conf
 
 echo -e "\e[33m STARTING NGINX SERVER \e[0m"
 systemctl enable nginx
