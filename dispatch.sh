@@ -1,4 +1,3 @@
-
 echo -e "\e[33m Installing Golang \e[0m"
 dnf install golang -y  &>>/tmp/roboshop.log
 
