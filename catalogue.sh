@@ -9,7 +9,6 @@ echo -e "\e[33m Adding Application User \e[0m"
 useradd roboshop
 
 echo -e "\e[33m Creating Application Directory \e[0m"
-rm -rf
 mkdir /app
 
 echo -e "\e[33m Downloading Application Content \e[0m"
@@ -29,7 +28,7 @@ cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.s
 echo -e "\e[33m Starting Catalogue Service \e[0m"
 systemctl daemon-reload
 systemctl enable catalogue
-systemctl restart catalogue
+systemctl start catalogue
 
 echo -e "\e[33m Copying Mongodb Repo \e[0m"
 cp /home/centos/roboshop-shell/mongodb.repo /etc/yum.repos.d/mongo.repo
