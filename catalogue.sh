@@ -25,7 +25,7 @@ cd /app
 npm install
 
 echo -e "\e[33m Setup SystemD Service \e[0m"
-cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service
+cp /home/centos/roboshop-shell/catalogue.service  /etc/systemd/system/catalogue.service
 
 echo -e "\e[33m Starting Catalogue Service \e[0m"
 systemctl daemon-reload
