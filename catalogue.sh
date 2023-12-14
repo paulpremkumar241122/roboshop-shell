@@ -18,15 +18,16 @@ cd /app
 
 echo -e "\e[33m Extracting Application Content \e[0m"
 unzip /tmp/catalogue.zip &>>/tmp/roboshop.log
+cd /app
 
 echo -e "\e[33m Install NodeJS Dependencies \e[0m"
-cd /app
 npm install &>>/tmp/roboshop.log
 
 echo -e "\e[33m Setup SystemD Service \e[0m"
 cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service &>>/tmp/roboshop.log
 
 echo -e "\e[33m Start Catalogue Service \e[0m"
+
 systemctl daemon-reload &>>/tmp/roboshop.log
 systemctl enable catalogue &>>/tmp/roboshop.log
 systemctl restart catalogue &>>/tmp/roboshop.log
