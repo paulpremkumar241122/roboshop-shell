@@ -36,7 +36,7 @@ echo -e "\e[33m Copy MongoDB Repo file \e[0m"
 cp /home/centos/roboshop-shell/mongodb.repo /ete/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
 
 echo -e "\e[33m Install MongoDB Client \e[0m"
-dnf install mongodb-org-shell -y &>>/tmp/roboshop.log
+dnf install mongodb-org-shell -y  &>>/tmp/roboshop.log
 
 echo -e "\e[33m Load Schema \e[0m"
-mongo --host mongodb-dev.vagdevi.store </app/schema/catalogue.js &>>/tmp/roboshop.log
+mongo --host mongodb-dev.vagdevi.store </app/schema/catalogue.js  &>>/tmp/roboshop.log
