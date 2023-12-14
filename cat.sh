@@ -4,7 +4,7 @@ dnf module enable nodejs:18 -y
 dnf install nodejs -y
 
 useradd roboshop
-
+rm -rf
 mkdir /app
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip
@@ -27,4 +27,4 @@ cp /home/centos/roboshop-shell/mongodb.repo /etc/yum.repos.d/mongo.repo
 
 dnf install mongodb-org-shell -y
 
-mongo --host MONGODB-SERVER-IPADDRESS </app/schema/catalogue.js
+mongo --host mongodb-dev.vagdevi.store </app/schema/catalogue.js
