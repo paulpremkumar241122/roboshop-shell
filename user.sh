@@ -13,15 +13,15 @@ rm -rf /app
 mkdir /app
 
 echo -e "\e[33m Downloading Application Content \e[0m"
-curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip &>>/tmp/roboshop.log
+curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip  &>>/tmp/roboshop.log
 cd /app
 
 echo -e "\e[33m Extracting Application Content \e[0m"
-unzip /tmp/user.zip &>>/tmp/roboshop.log
+unzip /tmp/user.zip  &>>/tmp/roboshop.log
 
 echo -e "\e[33m Install NodeJS Dependencies \e[0m"
 cd /app
-npm install &>>/tmp/roboshop.log
+npm install  &>>/tmp/roboshop.log
 
 echo -e "\e[33m Setup SystemD Service \e[0m"
 cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/user.service
