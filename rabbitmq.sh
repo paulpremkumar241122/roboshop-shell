@@ -8,8 +8,8 @@ echo -e "\e[33m Install RabbitMQ Server \e[0m"
 dnf install rabbitmq-server -y  &>>/tmp/roboshop.log
 
 echo -e "\e[33m Starting RabbitMQ Server \e[0m"
-systemctl enable rabbitmq-server
-systemctl restart rabbitmq-server
+systemctl enable rabbitmq-server  &>>/tmp/roboshop.log
+systemctl restart rabbitmq-server  &>>/tmp/roboshop.log
 
 echo -e "\e[33m Adding RabbitMQ Application User \e[0m"
 rabbitmqctl add_user roboshop roboshop123  &>>/tmp/roboshop.log
