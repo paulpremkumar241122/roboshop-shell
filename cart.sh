@@ -9,7 +9,7 @@ echo -e "\e[33m Add Application User \e[0m"
 useradd roboshop
 
 echo -e "\e[33m Create Application Directory \e[0m"
-rm-rf /app
+rm -rf /app
 mkdir /app
 
 echo -e "\e[33m Downloading Application Content \e[0m"
@@ -24,7 +24,7 @@ cd /app
 npm install &>>/tmp/roboshop.log
 
 echo -e "\e[33m Setup SystemD Service \e[0m"
-cp catalogue.service /etc/systemd/system/cart.service
+cp /home/centos/roboshop-shell/cart.service /etc/systemd/system/cart.service
 
 echo -e "\e[33m Start Cart Service \e[0m"
 systemctl daemon-reload
