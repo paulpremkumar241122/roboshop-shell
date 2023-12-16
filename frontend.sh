@@ -1,20 +1,22 @@
+source common.sh
+component=frontend
 
-echo -e "\e[33m INSTALLING NGINX SERVER \e[0m"
-dnf install nginx -y  &>>/tmp/roboshop.log
+echo -e "${colour} INSTALLING NGINX SERVER ${nocolour}"
+dnf install nginx -y  &>>${log_file}
 
-echo -e "\e[33m REMOVING OLD APP CONTENT \e[0m"
-rm -rf /usr/share/nginx/html/*  &>>/tmp/roboshop.log
+echo -e "${colour} REMOVING OLD APP CONTENT ${nocolour}"
+rm -rf /usr/share/nginx/html/*  &>>${log_file}
 
-echo -e "\e[33m  DOWNLOADING FRONTEND CONTENT  \e[0m"
-curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip  &>>/tmp/roboshop.log
+echo -e "${colour}  DOWNLOADING ${component} CONTENT  ${nocolour}"
+curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip  &>>${log_file}
 
-echo -e "\e[33m EXTRACTING FRONTEND CONTENT \e[0m"
-cd /usr/share/nginx/html  &>>/tmp/roboshop.log
-unzip /tmp/frontend.zip &>>/tmp/roboshop.log
+echo -e "${colour} EXTRACTING ${component} CONTENT ${nocolour}"
+cd /usr/share/nginx/html  &>>${log_file}
+unzip /tmp/${component}.zip &>>${log_file}
 
-echo -e "\e[33m UPDATE FRONTEND CONFIGURATION \e[0m"
-cp /home/centos/roboshop-shell/roboshop.conf /etc/nginx/default.d/roboshop.conf  &>>/tmp/roboshop.log
+echo -e "${colour} UPDATE ${component} CONFIGURATION ${nocolour}"
+cp /home/centos/roboshop-shell/roboshop.conf /etc/nginx/default.d/roboshop.conf  &>>${log_file}
 
-echo -e "\e[33m STARTING NGINX SERVER \e[0m"
-systemctl enable nginx  &>>/tmp/roboshop.log
-systemctl restart nginx  &>>/tmp/roboshop.log
+echo -e "${colour} STARTING NGINX SERVER ${nocolour}"
+systemctl enable nginx  &>>${log_file}
+systemctl restart nginx  &>>${log_file}
