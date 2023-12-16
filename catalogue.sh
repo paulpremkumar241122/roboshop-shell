@@ -20,9 +20,9 @@ cd /app
 
 echo -e "\e[33m Extracting Application Content \e[0m"
 unzip /tmp/$component.zip  &>>/tmp/roboshop.log
-y
-y
-y
+-y
+-y
+-y
 cd /app
 
 echo -e "\e[33m Installing Dependencies \e[0m"
