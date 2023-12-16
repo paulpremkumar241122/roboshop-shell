@@ -15,8 +15,8 @@ echo -e "${colour} Add User ${nocolour}"
 useradd roboshop  &>>${log_file}
 
 echo -e "${colour} Creating Application Directory ${nocolour}"
-rm -rf  &>>${log_file}
-mkdir /app
+rm -rf ${app_path}  &>>${log_file}
+mkdir ${app_path}
 
 echo -e "${colour} Downloading Application Content ${nocolour}"
 curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip  &>>${log_file}
