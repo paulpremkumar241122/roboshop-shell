@@ -19,10 +19,7 @@ curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$compone
 cd /app
 
 echo -e "\e[33m Extracting Application Content \e[0m"
-unzip /tmp/$component.zip  &>>/tmp/roboshop.log
--y
--y
--y
+unzip -o /tmp/$component.zip  &>>/tmp/roboshop.log
 cd /app
 
 echo -e "\e[33m Installing Dependencies \e[0m"
