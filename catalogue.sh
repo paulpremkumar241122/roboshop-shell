@@ -16,13 +16,13 @@ mkdir /app  &>>/tmp/roboshop.log
 
 echo -e "\e[33m Downloading Application Content \e[0m"
 curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip  &>>/tmp/roboshop.log
+cd /app  &>>/tmp/roboshop.log
 
 echo -e "\e[33m Extracting Application Content \e[0m"
-cd /app  &>>/tmp/roboshop.log
 unzip /tmp/$component.zip  &>>/tmp/roboshop.log
+cd /app  &>>/tmp/roboshop.log
 
 echo -e "\e[33m Installing Dependencies \e[0m"
-cd /app  &>>/tmp/roboshop.log
 npm install  &>>/tmp/roboshop.log
 
 echo -e "\e[33m Setup Service File \e[0m"
