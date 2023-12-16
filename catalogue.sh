@@ -1,5 +1,5 @@
 component=catalogue
-colour="\e[33m"
+colour="\e[35m"
 nocolour="\e[0m"
 
 echo -e "${colour} Enable NodeJs 18v ${nocolour}"
