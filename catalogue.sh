@@ -1,8 +1,5 @@
+source common.sh
 component=catalogue
-colour="\e[35m"
-nocolour="\e[0m"
-log_file="/tmp/roboshop.log"
-app_path="/app"
 
 echo -e "${colour} Enable NodeJs 18v ${nocolour}"
 dnf module disable nodejs -y  &>>${log_file}
