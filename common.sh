@@ -5,7 +5,7 @@ app_path="/app"
 
 app_pre_setup() {
   echo -e "${colour} Add User ${nocolour}"
-  useradd roboshop  &>>${log_file}
+  useradd roboshop &>>${log_file}
 
   echo -e "${colour} Creating Application Directory ${nocolour}"
   rm -rf ${app_path}  &>>${log_file}
@@ -77,6 +77,21 @@ maven() {
   mv target/${component}-1.0.jar ${component}.jar  &>>${log_file}
 
   mysql_schema_setup
+
+  systemd_setup
+
+}
+
+python() {
+
+  echo -e "${colour} Installing Python 3.6v ${nocolour}"
+  dnf install python36 gcc python3-devel -y  &>>${log_file}
+
+  app_pre_setup
+
+  echo -e "${colour} Installing Application Dependencies ${nocolour}"
+  cd ${app_path}
+  pip3.6 install -r requirements.txt  &>>${log_file}
 
   systemd_setup
 
