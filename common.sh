@@ -6,27 +6,33 @@ app_path="/app"
 app_pre_setup() {
   echo -e "${colour} Add User ${nocolour}"
   useradd roboshop &>>${log_file}
+  echo $?
 
   echo -e "${colour} Creating Application Directory ${nocolour}"
   rm -rf ${app_path}  &>>${log_file}
   mkdir ${app_path}
+  echo $?
 
   echo -e "${colour} Downloading ${component} Content ${nocolour}"
   curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip  &>>${log_file}
+  echo $?
 
   echo -e "${colour} Extracting Application Content ${nocolour}"
   cd ${app_path}
   unzip -o /tmp/$component.zip  &>>${log_file}
+  echo $?
 }
 
 systemd_setup() {
     echo -e "${colour} Setup Service File ${nocolour}"
     cp /home/centos/roboshop-shell/$component.service /etc/systemd/system/$component.service  &>>${log_file}
+    echo $?
 
     echo -e "${colour} Starting $component Service ${nocolour}"
     systemctl daemon-reload  &>>${log_file}
     systemctl enable $component  &>>${log_file}
     systemctl restart $component  &>>${log_file}
+    echo $?
 }
 
 nodejs() {
@@ -88,12 +94,14 @@ python() {
 
   echo -e "${colour} Installing Python 3.6v ${nocolour}"
   dnf install python36 gcc python3-devel -y  &>>${log_file}
+  echo $?
 
   app_pre_setup
 
   echo -e "${colour} Installing Application Dependencies ${nocolour}"
   cd ${app_path}
   pip3.6 install -r requirements.txt  &>>${log_file}
+  echo $?
 
   systemd_setup
 }
