@@ -65,6 +65,7 @@ mysql_schema_setup() {
     mysql -h mysql-dev.vagdevi.store -uroot -pRoboShop@1 < ${app_path}/schema/${component}.sql  &>>${log_file}
 }
 
+
 maven() {
   echo -e "${colour} Installing Maven ${nocolour}"
   dnf install maven -y  &>>${log_file}
@@ -82,6 +83,7 @@ maven() {
 
 }
 
+
 python() {
 
   echo -e "${colour} Installing Python 3.6v ${nocolour}"
@@ -94,5 +96,4 @@ python() {
   pip3.6 install -r requirements.txt  &>>${log_file}
 
   systemd_setup
-
 }
