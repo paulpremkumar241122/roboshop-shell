@@ -1,7 +1,15 @@
-colour="\e[36m"
+colour="\e[33m"
 nocolour="\e[0m"
 log_file="/tmp/roboshop.log"
 app_path="/app"
+
+stat_check() {
+  if [ $1 -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
+}
 
 app_pre_setup() {
   echo -e "${colour} Add User ${nocolour}"
@@ -9,62 +17,39 @@ app_pre_setup() {
   if [ $? -eq 1 ]; then
     useradd roboshop &>>${log_file}
   fi
-    if [ $? -eq 0 ]; then
-      echo SUCCESS
-    else
-      echo FAILURE
-    fi
+
+  stat_check $?
 
   echo -e "${colour} Creating Application Directory ${nocolour}"
   rm -rf ${app_path}  &>>${log_file}
   mkdir ${app_path}
 
-    if [ $? -eq 0 ]; then
-      echo SUCCESS
-    else
-      echo FAILURE
-    fi
+  stat_check $?
 
   echo -e "${colour} Downloading ${component} Content ${nocolour}"
   curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip  &>>${log_file}
 
-    if [ $? -eq 0 ]; then
-      echo SUCCESS
-    else
-      echo FAILURE
-    fi
+  stat_check $?
 
   echo -e "${colour} Extracting Application Content ${nocolour}"
   cd ${app_path}
   unzip -o /tmp/$component.zip  &>>${log_file}
 
-    if [ $? -eq 0 ]; then
-      echo SUCCESS
-    else
-      echo FAILURE
-    fi
+  stat_check $?
 }
 
 systemd_setup() {
     echo -e "${colour} Setup Service File ${nocolour}"
     cp /home/centos/roboshop-shell/$component.service /etc/systemd/system/$component.service  &>>${log_file}
 
-    if [ $? -eq 0 ]; then
-      echo SUCCESS
-    else
-      echo FAILURE
-    fi
+    stat_check $?
 
     echo -e "${colour} Starting $component Service ${nocolour}"
     systemctl daemon-reload  &>>${log_file}
     systemctl enable $component  &>>${log_file}
     systemctl restart $component  &>>${log_file}
 
-    if [ $? -eq 0 ]; then
-      echo SUCCESS
-    else
-      echo FAILURE
-    fi
+    stat_check $?
 }
 
 nodejs() {
@@ -127,11 +112,7 @@ python() {
   echo -e "${colour} Installing Python 3.6v ${nocolour}"
   dnf install python36 gcc python3-devel -y  &>>${log_file}
 
-  if [ $? -eq 0 ]; then
-    echo SUCCESS
-  else
-    echo FAILURE
-  fi
+  stat_check $?
 
 
   app_pre_setup
@@ -140,11 +121,7 @@ python() {
   cd ${app_path}
   pip3.6 install -r requirements.txt  &>>${log_file}
 
-  if [ $? -eq 0 ]; then
-    echo SUCCESS
-  else
-    echo FAILURE
-  fi
+  stat_check $?
 
 
   systemd_setup
