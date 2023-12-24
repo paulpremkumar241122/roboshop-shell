@@ -65,8 +65,12 @@ nodejs() {
   dnf module disable nodejs -y  &>>${log_file}
   dnf module enable nodejs:18 -y  &>>${log_file}
 
+  stat_check $?
+
   echo -e "${colour} Installing NodeJS ${nocolour}"
   dnf install nodejs -y  &>>${log_file}
+
+  stat_check $?
 
   app_pre_setup
 
@@ -81,19 +85,29 @@ mongo_schema_setup() {
   echo -e "${colour} Copy Mongodb Repo ${nocolour}"
   cp /home/centos/roboshop-shell/mongodb.repo /etc/yum.repos.d/mongo.repo  &>>${log_file}
 
+  stat_check $?
+
   echo -e "${colour} Installing Mongodb ${nocolour}"
   dnf install mongodb-org-shell -y  &>>${log_file}
 
+  stat_check $?
+
   echo -e "${colour} Loading Schema ${nocolour}"
   mongo --host mongodb-dev.vagdevi.store <${app_path}/schema/$component.js  &>>${log_file}
+
+  stat_check $?
 }
 
 mysql_schema_setup() {
     echo -e "${colour} Installing Mysql Client ${nocolour}"
     dnf install mysql -y  &>>${log_file}
 
+    stat_check $?
+
     echo -e "${colour} Loading Schema ${nocolour}"
-    mysql -h mysql-dev.vagdevi.store -uroot -pRoboShop@1 < ${app_path}/schema/${component}.sql  &>>${log_file}
+    mysql -h mysql-dev.vagdevi.store -uroot -p${mysql_root_password} < ${app_path}/schema/${component}.sql  &>>${log_file}
+
+    stat_check $?
 }
 
 
@@ -101,12 +115,15 @@ maven() {
   echo -e "${colour} Installing Maven ${nocolour}"
   dnf install maven -y  &>>${log_file}
 
+  stat_check $?
+
   app_pre_setup
 
   echo -e "${colour} Downloading maven Dependencies  ${nocolour}"
   cd ${app_path}
   mvn clean package  &>>${log_file}
   mv target/${component}-1.0.jar ${component}.jar  &>>${log_file}
+  stat_check $?
 
   mysql_schema_setup
 
