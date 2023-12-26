@@ -1,33 +1,40 @@
 source common.sh
-component=
+component=dispatch
 
 echo -e "${colour} Installing Golang ${nocolour}"
 dnf install golang -y  &>>${log_file}
+stat_check $?
 
 echo -e "${colour} Adding Application User ${nocolour}"
 useradd roboshop  &>>${log_file}
+stat_check $?
 
 echo -e "${colour} Creating Application Directory ${nocolour}"
 rm -rf  &>>${log_file}
 mkdir /app  &>>${log_file}
+stat_check $?
 
 echo -e "${colour} Downloading Application Content ${nocolour}"
-curl -L -o /tmp/dispatch.zip https://roboshop-artifacts.s3.amazonaws.com/dispatch.zip  &>>${log_file}
+curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip  &>>${log_file}
+stat_check $?
 
 echo -e "${colour} Extracting Application Content ${nocolour}"
 cd /app  &>>${log_file}
-unzip /tmp/dispatch.zip  &>>${log_file}
+unzip /tmp/${component}.zip  &>>${log_file}
+stat_check $?
 
 echo -e "${colour} Downloading the Dependencies ${nocolour}"
 cd /app  &>>${log_file}
-go mod init dispatch  &>>${log_file}
+go mod init ${component}  &>>${log_file}
 go get  &>>${log_file}
 go build  &>>${log_file}
+stat_check $?
 
 echo -e "${colour} Copying the Service File ${nocolour}"
-cp /home/centos/roboshop-shell/dispatch.service /etc/systemd/system/dispatch.service  &>>${log_file}
+cp /home/centos/roboshop-shell/${component}.service /etc/systemd/system/${component}.service  &>>${log_file}
+stat_check $?
 
-echo -e "${colour} Starting Dispatch Service ${nocolour}"
+echo -e "${colour} Starting ${component} Service ${nocolour}"
 systemctl daemon-reload  &>>${log_file}
-systemctl enable dispatch  &>>${log_file}
-systemctl restart dispatch ; tail -f /var/log/messages
+systemctl enable ${component}  &>>${log_file}
+systemctl restart ${component} ; tail -f /var/log/messages
